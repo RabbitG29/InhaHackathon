@@ -2,7 +2,8 @@
   <div class="hello">
     <div class="card" style="float:left">
       <h1>오늘의 날씨정보</h1>
-      <h1><img  src="../assets/sun.png" width="50" height="50" > {{data[0]}} ºC</h1>
+      <h1><img v-if="this.weather==0" src="../assets/sun.png" width="50" height="50" >
+        <img v-if="this.weather==1" src="../assets/cloud.png" width="50" height="50"> {{data[0]}} ºC</h1>
       {{data[1]}} <br/>
       {{data[2]}} <br/>
     </div>
@@ -16,6 +17,7 @@
       오늘 오전의 강수확률은 {{data[9]}} 입니다<br/>
       오늘 오후의 강수확률은 {{data[10]}} 입니다<br/>
     </div>
+    <img id="photo" src="../../../img/download1.jpg" width="150" height="150">
   </div>
 </template>
 
@@ -51,7 +53,9 @@ export default {
       console.log('getMise called')
     },
     getImg: function(){
-
+      if(this.data[1]=='흐림'){
+        this.weather = 1
+      }
 
 
     }
@@ -69,6 +73,12 @@ export default {
   padding-top: 50px;
   font-size: 15px;
 }
+#photo{
+  left :0;
+  padding-left: 10px;
+  padding-bottom: 10px;
+
+}
 h1 {
   font-weight: 500;
 }
@@ -81,10 +91,6 @@ h3 {
 ul {
   list-style-type: none;
   padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 a {
   color: #42b983;

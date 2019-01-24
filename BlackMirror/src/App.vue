@@ -14,10 +14,14 @@
   text-align: center;
   color: #ffffff;
   background-color: black;
-  background-size: 500px 900px;
+}
+body{
+  margin :0;
+    
 }
 #nav {
   padding: 30px;
+  margin :0px;
 }
 
 #nav a {
