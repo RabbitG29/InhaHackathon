@@ -8,6 +8,7 @@ import requests
 import threading
 import sys
 import eventlet
+import re
 eventlet.monkey_patch()
 
 app = Flask(__name__)
@@ -28,19 +29,37 @@ def sayhi():
         soup = bs4.BeautifulSoup(html, 'html5lib')
         temperature = soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text # 기온
         weather = soup.find('p', class_='cast_txt').text # 날씨
+        pattern = re.compile(r',')
+        [weather,comp_weather]=re.split(pattern,weather)
+
         mise = soup.find('dl', class_='indicator').text # 미세먼지+초미세먼지+오존지수
         morning = soup.find('li', class_='date_info today').find('span', class_='point_time morning').find('span', class_='rain_rate').find('span', class_='num').text
         afternoon = soup.find('li', class_='date_info today').find('span', class_='point_time afternoon').find('span', class_='rain_rate').find('span', class_='num').text
         print('현재 ' + location + ' 기온은 ' + temperature + '도 입니다.')
         print('날씨는 ' + weather)
-        print(mise)
+#        print(mise)
+        pattern = re.compile(r' ')
+#        print(re.split(pattern,mise))
+        [no1,mi,mi_val,cho,cho_val,ozon,ozon_val,no2] = re.split(pattern,mise);
+        print(mi)
+        print(mi_val)
+        print(cho)
+        print(cho_val)
+        print(ozon)
+        print(ozon_val)
         print('오늘 오전의 강수확률은 '+morning+'% 입니다.')
         print('오늘 오후의 강수확률은 '+afternoon+'% 입니다.')
 
         data2 = []
         data2.append(temperature)
         data2.append(weather)
-        data2.append(mise)
+        data2.append(comp_weather)
+        data2.append(mi)
+        data2.append(mi_val)
+        data2.append(cho)
+        data2.append(cho_val)
+        data2.append(ozon)
+        data2.append(ozon_val)
         data2.append(morning)
         data2.append(afternoon)
         data = data2
