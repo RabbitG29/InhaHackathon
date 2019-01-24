@@ -47,6 +47,7 @@ def sayhi():
 
         socketio.emit('mise', {'data': data})
 
+@socketio.on('mise')
 def test_message():
         print('start')
         socketio.emit('mise', {'data':data})
